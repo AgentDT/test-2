@@ -8,6 +8,7 @@ def main():
     args = parser.parse_args()
 
     client = Client(args)
+    #frame.main()
     client.run_chat()
 
 if __name__ == "__main__":

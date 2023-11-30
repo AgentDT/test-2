@@ -1,8 +1,10 @@
 from tkinter import *
 from tkinter.messagebox import *
 from tkinter.scrolledtext import *
+import chat_client_class
+import client_state_machine
 
-class mainframe:
+class frame:
 
     def __init__(self, parent):
         self.output = ScrolledText(parent, width = 100) 
@@ -23,8 +25,19 @@ class mainframe:
 
     def send(self):
         #showinfo(message="Hi there "+self.input.get())
+        data = str(self.input.get())
+        self.output.configure(state ='normal') 
+        self.output.insert(INSERT, data)
+        self.output.insert(INSERT, "\n")
+        self.output.configure(state ='disabled') 
+        
+    def receive(self):
         pass
+        
+        
+def main():
+    root = Tk()
+    app = frame(root)
+    root.mainloop()
 
-root = Tk()
-app = mainframe(root)
-root.mainloop()
+main()
