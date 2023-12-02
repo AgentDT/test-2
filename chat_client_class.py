@@ -8,6 +8,10 @@ import client_state_machine as csm
 
 import threading
 
+from tkinter import *
+from tkinter.messagebox import *
+from tkinter.scrolledtext import *
+
 class Client:
     def __init__(self, args):
         self.peer = ''
@@ -33,6 +37,10 @@ class Client:
         reading_thread = threading.Thread(target=self.read_input)
         reading_thread.daemon = True
         reading_thread.start()
+        
+        root = Tk()
+        app = frame(root)
+        root.mainloop()
 
     def shutdown_chat(self):
         return
@@ -101,10 +109,44 @@ class Client:
             self.output()
             time.sleep(CHAT_WAIT)
         self.quit()
-
-#==============================================================================
-# main processing loop
-#==============================================================================
+        
     def proc(self):
         my_msg, peer_msg = self.get_msgs()
         self.system_msg += self.sm.proc(my_msg, peer_msg)
+
+class frame:
+
+    def __init__(self, parent):
+        self.output = ScrolledText(parent, width = 100) 
+        self.output.grid(column = 1, row = 0)
+        self.output.configure(state ='disabled') 
+        
+        self.hello_button = Button(parent, text="Send", command=self.send)
+        self.hello_button.grid(column=2, row=1)
+        
+        self.quit_button = Button(parent, text="Disconnect", command=parent.destroy)
+        self.quit_button.grid(column=3, row=1)
+        
+        self.input = Entry(parent, width = 120)
+        self.input.grid(column=1, row=1)
+        self.label = Label(parent, text="Text box: ")
+        self.label.grid(column=0, row=1)
+
+    def send(self):
+        data = str(self.input.get())
+        self.output.configure(state ='normal') 
+        self.output.insert(INSERT, data)
+        self.output.insert(INSERT, "\n")
+        self.output.configure(state ='disabled') 
+        
+    def receive(self):
+        pass
+        
+        
+#==============================================================================
+# main processing loop
+#==============================================================================
+    
+
+
+

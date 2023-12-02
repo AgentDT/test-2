@@ -1,8 +1,20 @@
 import string
+import random
 
 strings = []
 for e in string.ascii_letters:
     strings.append(e)
+
+'''    
+def key(out1, n2, i, j):
+    key = random.shuffle(strings)
+    if n2[i][j] in strings:
+        k = (strings.index(n2[i][j]) + 3)%52
+        out1.append(strings[k])
+    else:
+        out1.append(n2[i][j])
+    return out1, key
+'''
 
 def encode(n):
     if type(n) == str:
@@ -25,7 +37,8 @@ def encode(n):
             out2 = "".join(out1)
         out.append(out2)
             #END TYPE 1
-    return out
+    out4 = " ".join(out)
+    return out4
     
 def decode(n):
     if type(n) == str:
@@ -52,9 +65,9 @@ def decode(n):
     return out3
         
 #TESTING SITE
-k = "Blame Canada!!!!1!!"
+#k = "Blame Canada!!!!1!!"
 
-print(k)
-k2 = encode(k)
-print(k2)
-print(decode(k2))
+#print(k)
+#k2 = encode(k)
+#print(k2)
+#print(decode(k2))

@@ -6,6 +6,11 @@ Created on Sun Apr  5 00:00:32 2015
 #from socket import recv
 from chat_utils import *
 import json
+import decodeEncoder
+
+from tkinter import *
+from tkinter.messagebox import *
+from tkinter.scrolledtext import *
 
 
 class ClientSM:
@@ -142,6 +147,7 @@ class ClientSM:
                     self.state = S_LOGGEDIN
                     self.peer = ''
                 else:
+                    my_msg = decodeEncoder.encode(my_msg)
                     mysend(self.s, json.dumps(
                         {"action": "exchange", "from": "[" + self.me + "]", "message": my_msg}))
             if len(peer_msg) > 0:    # peer's stuff, coming in
@@ -156,7 +162,7 @@ class ClientSM:
                 
                 elif peer_msg["action"] == "exchange":
                     peer_msg = peer_msg["from"] + peer_msg["message"]
-                
+                    peer_msg = decodeEncoder.decode(peer_msg)
                     self.out_msg += peer_msg
                     
                 elif peer_msg["action"] == "connect":
@@ -175,3 +181,4 @@ class ClientSM:
             print_state(self.state)
 
         return self.out_msg
+
